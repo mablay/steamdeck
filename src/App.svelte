@@ -76,6 +76,7 @@
 
 
   <!-- <Button ></Button> -->
+  <div class="footer">Press keys to navigate, ESC for one step back</div>
 </main>
 
 <style>
@@ -123,6 +124,14 @@
     content: "";
     display: table;
     clear: both;
+  }
+
+  .footer {
+    position: fixed;
+    bottom: 0;
+    height: 30px;
+    color: grey;
+    width: 100%;
   }
 
 	@media (min-width: 640px) {
