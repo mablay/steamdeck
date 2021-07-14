@@ -12,8 +12,9 @@
   let path = []
   let history = []
   
-  document.onkeydown = e => select(e)
+  // document.onkeydown = e => select(e)
 
+  /*
   function select (event) {
     const key = event.key
     if (key === 'Escape') {
@@ -56,6 +57,7 @@
     keys = Object.keys(node.keys)
     console.log(keys)
   }
+  */
 </script>
 
 <main>
@@ -65,11 +67,11 @@
 
   <div class="row">
     <div class="col-2">
-      {#each keys as key}
+      <!-- {#each keys as key}
       <div class="text-left">
         {key} | { node.keys[key].icon } | { node.keys[key].title }
       </div>
-      {/each}
+      {/each} -->
       <Steamdeck bind:path={path} />
     </div>
     <div class="col-2">
