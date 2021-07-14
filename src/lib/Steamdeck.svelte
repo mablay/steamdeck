@@ -1,51 +1,31 @@
 <script>
+  // This component is about
+  // * rendering the keyboard container
+  // * showing a no-focus warning
+  // * capturing keystrokes
   import { onMount } from 'svelte'
-  import { keyTree } from '../js/keymap'
   import Keyboard from './Keyboard.svelte'
   export let path
+  let keyboard
   let self
 
-  // document.onkeydown = e => select(e)
-  function up () {
-    console.log('up')
-    if (path.length === 0) return
-    path.pop()
-    path = path
-  }
-
-  function down (event) {
-    const key = String.fromCharCode(97 + event.clientX % 26)
-    console.log('down', key)
-    path = [...path, key]
-  }
-
-  function keydown (event) {
-    console.log(event)
-  }
-
-  function focus (event) {
-    if (event) {
-      console.log('blur => refocus')
-    } else {
-      console.log('focus')
-    }
-    this.focus()
-  }
-
-  function focussed () {
-    console.log('focussed')
-  }
-
+  function focus (event) { self.focus() }
   onMount(() => self.focus())
 </script>
 
-<div id="steamdeck" tabindex="0" bind:this="{self}" on:blur="{focus}" on:focus={focussed} on:keydown={keydown}>
+<div
+  id="steamdeck"
+  tabindex="0"
+  bind:this="{self}"
+  on:blur={focus}
+  on:keydown={keyboard.keydown}
+  >
   <div class="when-inactive">
     <p>Click to activate</p>
     <p>STEAMDECK</p>
   </div>
   <div class="when-active">
-    <Keyboard />
+    <Keyboard bind:this={keyboard} bind:path={path} on:tag />
   </div>
 </div>
 
@@ -69,8 +49,7 @@
 
 .when-inactive {
   position: absolute;
-  width: 400px;
-  height: 400px;
+  width: 360px;
   color: white;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;   
   font-size: 24px;
@@ -92,11 +71,6 @@
     from { opacity: 0; }
     to   { opacity: 1; }
 }
-
-button {
-  animation: fadein 1s;
-}
-
 
 #steamdeck > .when-inactive { display: block }
 #steamdeck:focus > .when-inactive { display: none }

@@ -1,28 +1,28 @@
 export const keymap = [
   { path: 'w', icon: '☀️', title: 'weather' },
-  { path: 'wp', icon: '⛅', title: 'partly sunny' },
-  { path: 'ws', icon: '☀️', title: 'sunny' },
-  { path: 'wr', icon: '☔', title: 'rainy' },
-  { path: 'wc', icon: '☁️', title: 'cloudy' },
-  { path: 'wi', icon: '❄️', title: 'snowflake' },
-  { path: 'ww', icon: '⛄', title: 'snowman' },
-  { path: 'wl', icon: '⚡', title: 'lightning' },
-  { path: 'wb', icon: '🌀', title: 'cyclone' },
-  { path: 'wf', icon: '🌁', title: 'foggy' },
+  { path: 'wq', icon: '⛅', title: 'partly sunny' },
+  { path: 'ww', icon: '☀️', title: 'sunny' },
+  { path: 'we', icon: '☔', title: 'rainy' },
+  { path: 'wa', icon: '☁️', title: 'cloudy' },
+  { path: 'ws', icon: '❄️', title: 'snowflake' },
+  { path: 'wd', icon: '⛄', title: 'snowman' },
+  { path: 'wy', icon: '⚡', title: 'lightning' },
+  { path: 'wx', icon: '🌀', title: 'cyclone' },
+  { path: 'wc', icon: '🌁', title: 'foggy' },
   { path: 'a', icon: '🐰', title: 'animal' },
-  { path: 'am', icon: '🐶', title: 'mamals' },
-  { path: 'amc', icon: '🐆', title: 'cat' },
-  { path: 'amch', icon: '🐈', title: 'housecat' },
-  { path: 'amcl', icon: '🐆', title: 'leopard' },
-  { path: 'amct', icon: '🐯', title: 'tiger' },
-  { path: 'amd', icon: '🐶', title: 'dog' },
-  { path: 'amdb', icon: '🐶', title: 'boxer' },
-  { path: 'amdp', icon: '🐩', title: 'poodle' },
-  { path: 'amsd', icon: '🐬', title: 'dolphin' },
-  { path: 'ar', icon: '🐊', title: 'reptile' },
-  { path: 'arf', icon: '🐸', title: 'frog' },
-  { path: 'arc', icon: '🐊', title: 'crocodile' },
-  { path: 'ard', icon: '🐉', title: 'dragon' }
+  { path: 'aa', icon: '🐶', title: 'mamals' },
+  { path: 'aac', icon: '🐆', title: 'cat' },
+  { path: 'aacc', icon: '🐈', title: 'housecat' },
+  { path: 'aacs', icon: '🐆', title: 'leopard' },
+  { path: 'aaca', icon: '🐯', title: 'tiger' },
+  { path: 'aad', icon: '🐶', title: 'dog' },
+  { path: 'aadd', icon: '🐶', title: 'boxer' },
+  { path: 'aadr', icon: '🐩', title: 'poodle' },
+  { path: 'aawd', icon: '🐬', title: 'dolphin' },
+  { path: 'aw', icon: '🐊', title: 'reptile' },
+  { path: 'awd', icon: '🐸', title: 'frog' },
+  { path: 'awc', icon: '🐊', title: 'crocodile' },
+  { path: 'awe', icon: '🐉', title: 'dragon' }
 
   /*,
   { path: 'amm', icon: '🐭', title: 'mouse' },
@@ -138,4 +138,13 @@ function setKey (value, path, parent = keyTree) {
     parent.keys[key] = parent.keys[key] || {}
     setKey (value, subkey, parent.keys[key])
   }
+}
+
+export function getNode (path = []) {
+  const segments = Array.isArray(path) ? path : path.split('')
+  let node = keyTree
+  for (const key of segments) {
+    node = node.keys[key]
+  }
+  return node
 }

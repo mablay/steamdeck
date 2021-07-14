@@ -1,5 +1,5 @@
 <script>
-  import { keyTree } from './js/keymap'
+  import { getNode, keyTree } from './js/keymap'
   import Simulator from './lib/Simulator.svelte'
   import Footer from './lib/Footer.svelte'
   import Breadcrumbs from './lib/Breadcrumbs.svelte'
@@ -11,53 +11,17 @@
   let keys = Object.keys(node.keys)
   let path = []
   let history = []
-  
-  // document.onkeydown = e => select(e)
 
-  /*
-  function select (event) {
-    const key = event.key
-    if (key === 'Escape') {
-      up()
-      return
+  function tag (event) {
+    const { path } = event.detail
+    const record = {
+      ...getNode(path),
+      time: Date.now()
     }
-    if (!~keys.indexOf(key)) return
-    console.log('select', key)
-    const value = node.keys[key]
-    if (!value.keys) {
-      history = [...history, {
-        time: Date.now(),
-        ...value
-      }]
-      node = keyTree
-      keys = Object.keys(node.keys)
-      path = []
-      return
-    }
-    node = node.keys[key]
-    keys = Object.keys(node.keys)
-    path = [...path, {
-      key,
-      title: node.title,
-      icon: node.icon
-    }]
-    console.log(path)
-
-    // path.push(key)
+    history = [record, ...history]
+    console.log('TAG |', path.join('/'))
   }
 
-  // move one level backwards in the path
-  function up () {
-    node = keyTree
-    path.pop()
-    for (const seg of path.map(n => n.key)) {
-      node = node.keys[seg]
-    }
-    path = path // svelte needs that to update the UI
-    keys = Object.keys(node.keys)
-    console.log(keys)
-  }
-  */
 </script>
 
 <main>
@@ -67,12 +31,7 @@
 
   <div class="row">
     <div class="col-2">
-      <!-- {#each keys as key}
-      <div class="text-left">
-        {key} | { node.keys[key].icon } | { node.keys[key].title }
-      </div>
-      {/each} -->
-      <Steamdeck bind:path={path} />
+      <Steamdeck bind:path={path} on:tag={tag} />
     </div>
     <div class="col-2">
       <pre class="text-left">

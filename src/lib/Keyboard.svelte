@@ -1,14 +1,52 @@
 <script>
-  import { keyTree } from '../js/keymap'
+	import { createEventDispatcher } from 'svelte'
+  import { getNode } from '../js/keymap'
   export let path
+  
+  const dispatch = createEventDispatcher()
+
+  $: node = getNode(path)
   let keyboard = {
     q: 'Q', w: 'W', e: 'E',
     a: 'A', s: 'S', d: 'D',
     y: 'Y', x: 'X', c: 'C'
   }
+
+  $: {
+    for (const key in keyboard) {
+      if (node.keys[key]) {
+        keyboard[key] = node.keys[key].icon || '?'
+      } else {
+        keyboard[key] = key
+      }
+    }
+  }
+
+  export function keydown (event) {
+    // console.log('KEYDOWN |', event.key)
+    const key = event.key
+    if (key === 'Escape') {
+      console.log('up()')
+      // up()
+      return
+    }
+    const next = node.keys[key]
+    if (!next) return
+    if (!next.keys) {
+      dispatch('tag', { path: [...path, key] })
+      path = []
+      // console.log('root options', Object.keys(getNode().keys).join(', '))
+    } else {
+      path = [...path, key]
+      // console.log('options', Object.keys(next.keys).join(', '))
+    }
+
+  }
+
 </script>
 
 <div class="keyboard">
+  {node.icon}
   <div class="key q">{keyboard.q}</div>
   <div class="key w">{keyboard.w}</div>
   <div class="key e">{keyboard.e}</div>
