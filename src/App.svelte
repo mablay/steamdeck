@@ -9,7 +9,7 @@
 
   let node = keyTree
   let keys = Object.keys(node.keys)
-  let path = []
+  let path = [] // TODO: associate timestamps to keys
   let history = []
 
   function tag (event) {
