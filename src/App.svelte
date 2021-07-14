@@ -1,7 +1,12 @@
 <script>
-  import Button from './Button.svelte'
-  import { keyTree } from './keymap'
-  import Simulator from './Simulator.svelte'
+  import { keyTree } from './js/keymap'
+  import Simulator from './lib/Simulator.svelte'
+  import Footer from './lib/Footer.svelte'
+  import Breadcrumbs from './lib/Breadcrumbs.svelte'
+  import Steamdeck from './lib/Steamdeck.svelte'
+  import History from './lib/History.svelte'
+  import Hero from './lib/Hero.svelte'
+
   let node = keyTree
   let keys = Object.keys(node.keys)
   let path = []
@@ -54,85 +59,36 @@
 </script>
 
 <main>
-  <div class="hero">
-    <h1>SteamDeck</h1>
-  </div>
+  <Hero title="Steamdeck" />
   <Simulator />
-  <h3 class="text-left">/{ path.map(n => n.title).join('/') }</h3>
+  <Breadcrumbs path={path} />
+
   <div class="row">
-    <div class="column">
+    <div class="col-2">
       {#each keys as key}
       <div class="text-left">
         {key} | { node.keys[key].icon } | { node.keys[key].title }
       </div>
       {/each}
+      <Steamdeck bind:path={path} />
     </div>
-    <div class="column">
+    <div class="col-2">
       <pre class="text-left">
-        {#each history as record}{record.time} | {record.icon} | {record.title}{@html '\n'}{/each}
+        <History history={history} />
       </pre>
     </div>
   </div>
 
 
-  <!-- <Button ></Button> -->
-  <div class="footer">Press keys to navigate, ESC for one step back</div>
+  <Footer/>
 </main>
 
 <style>
-  /* :global(body) {
-    background-color: grey;
-  } */
-
 	main {
-		text-align: center;
 		padding: 1em;
 		max-width: 240px;
 		margin: 0 auto;
 	}
-
-  .hero {
-    height: 130px;
-    width: 100%;
-  }
-
-	h1 {
-    position: absolute;
-    top: 60px;
-    margin: auto;
-    width: 100%;
-    text-align: center;
-    z-index: 100;
-		color: #ff3e00;
-		text-transform: uppercase;
-		font-size: 4em;
-		font-weight: 100;
-    text-shadow: 0 0 10px #fff;
-	}
-
-  .text-left {
-    text-align: left;
-  }
-
-  .column {
-    float: left;
-    width: 50%;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .footer {
-    position: fixed;
-    bottom: 0;
-    height: 30px;
-    color: grey;
-    width: 100%;
-  }
 
 	@media (min-width: 640px) {
 		main {

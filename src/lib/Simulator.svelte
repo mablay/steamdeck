@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte'
-  import { keymap } from './keymap'
+  import { keymap } from '../js/keymap'
   const characters = keymap.map(k => k.icon)
 
   function rndEvent (right) {
